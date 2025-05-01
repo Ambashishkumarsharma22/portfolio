@@ -1,19 +1,17 @@
-# Use Node.js Alpine image
+# Use Node.js Alpine base image
 FROM node:18-alpine
 
-# Set working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy package files from the subdirectory
-COPY portfolio-main/package*.json ./
-
-# Install dependencies
+# Copy package files and install dependencies
+COPY package*.json ./
 RUN npm install
 
-# Copy the rest of the app from the subdirectory
-COPY portfolio-main/ .
+# Copy rest of the application files
+COPY . .
 
-# Expose port (change if your app uses a different one)
+# Expose app port
 EXPOSE 3000
 
 # Start the app
