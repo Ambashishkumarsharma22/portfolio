@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'docker:24.0.2-dind' // Use a stable Docker-in-Docker image
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any
 
     environment {
         IMAGE_NAME = 'portfolio-site'
@@ -38,18 +33,18 @@ pipeline {
 
         stage('Run Docker Container') {
             steps {
-                echo 'Starting new container...'
+                echo 'Running new Docker container...'
                 sh 'docker run -d -p 3000:3000 --name $CONTAINER_NAME $IMAGE_NAME'
             }
         }
     }
 
     post {
-        failure {
-            echo '❌ Deployment failed.'
-        }
         success {
             echo '✅ Deployment succeeded.'
+        }
+        failure {
+            echo '❌ Deployment failed.'
         }
     }
 }
