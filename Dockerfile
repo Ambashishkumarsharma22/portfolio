@@ -1,13 +1,18 @@
-FROM nginx:alpine
+# Use an official Node.js runtime as base
+FROM node:18-alpine
 
+# Set the working directory
+WORKDIR /app
 
-RUN rm -rf /usr/share/nginx/html/*
+# Copy package files and install dependencies
+COPY package*.json ./
+RUN npm install
 
+# Copy the rest of your application code
+COPY . .
 
-COPY . /usr/share/nginx/html
+# Expose the port the app runs on
+EXPOSE 3000
 
-
-EXPOSE 80
-
-
-CMD ["nginx", "-g", "daemon off;"]
+# Start the application
+CMD ["npm", "start"]
