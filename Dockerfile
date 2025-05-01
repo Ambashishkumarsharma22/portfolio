@@ -1,18 +1,18 @@
-# Use an official Node.js runtime as base
-FROM node:18-alpine
+# Dockerfile
+FROM node:18
 
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Copy package files and install dependencies
+# Copy package.json and install dependencies
 COPY package*.json ./
 RUN npm install
 
-# Copy the rest of your application code
+# Copy the rest of your app
 COPY . .
 
-# Expose the port the app runs on
+# Expose the port
 EXPOSE 3000
 
-# Start the application
+# Start the app
 CMD ["npm", "start"]
